@@ -72,15 +72,26 @@ int main()
         vec[y[i]].push_back(x[i]);
     }
 
-    init_visited();
+    int start;
+    cout << "Enter starting node, [1,10] : ";
+    cin >> start;
 
-    cout << "Recursive dfs\n";
-    dfs_r(10);
+    if( start>0 && start <11)
+    {
 
-    init_visited();
+     cout << "\nDFS -->\n";
 
-    cout<< "\n\niterative dfs\n";
-    dfs(vec, 10);
+        init_visited();
+
+        cout << "Recursive dfs\n";
+        dfs_r(start);
+
+        init_visited();
+
+        cout<< "\n\niterative dfs\n";
+        dfs(vec, start);
+    }
+    else cout << "\nNo such node.\n";
 
     return 0;
 }
