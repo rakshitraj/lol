@@ -9,10 +9,10 @@ class Node :
     next : pionter
             pionter to next node   
     """
-    def __init__(self, data=None, prev=None, nextt=None):
+    def __init__(self, data=None, prev=None, next=None):
         self.data = data
         self.prev = prev
-        self.next = nextt
+        self.next = next
 
 class doubleLinkedList :
     """
@@ -32,9 +32,9 @@ class doubleLinkedList :
             print("Linked List does not exist...")
             return
         itr = self.head
-        llstr = '| <===>'
+        llstr = '| <==>'
         while itr :
-            llstr += str(itr.data) + '<===>'
+            llstr += str(itr.data) + '<==>'
             itr = itr.next
             if itr == self.head :
                 break
@@ -53,9 +53,10 @@ class doubleLinkedList :
             #     break
         return count
 
-
     def push_front(self, data)  : 
         node = Node(data, None, self.head)
+        if self.head != None : 
+            self.head.prev = node
         self.head = node
         if self.tail is None:
             self.tail = node
@@ -65,7 +66,9 @@ class doubleLinkedList :
             self.push_front(data)
             return
         node = Node(data, self.tail, None)
+        self.tail.next = node
         self.tail = node
+
 
     def push_values(self, data_list) :
         for data in data_list:
@@ -73,11 +76,13 @@ class doubleLinkedList :
 
     def pop_front(self) :
         self.head = self.head.next
+        self.head.prev = None
         if self.head is None :
             self.tail = None
 
     def pop_back(self) :
         self.tail = self.tail.prev
+        self.tail.next = None
         if self.tail is None:
             self.head = None
 
@@ -87,7 +92,7 @@ class doubleLinkedList :
         for data in data_list:
             self.push_back(data)
     
-    def insert_at(self, index) :
+    def insert_at(self, index, data) :
         if index<0 or index>self.length():
             raise Exception("Invalid Index...")
 
@@ -122,19 +127,13 @@ class doubleLinkedList :
             return
         count = 0 
         itr = self.head
-        while True:
-            if count+1 == index :
-                itr.next = itr.next.next
-                if itr.next is None or itr.next == self.head:
-                    self.tail = itr
-                    break
-            if itr == self.tail:
-                break
+        while itr:
+            if count == index :
+                itr.prev.next = itr.next
+                if itr.next:
+                    itr.next.prev = itr.prev
             count += 1
             itr = itr.next
-
-    def reverseList(self):
-        self.head, self.tail = self.tail, self.head
     
 if __name__ == '__main__' :
     ll = doubleLinkedList()
@@ -150,8 +149,6 @@ if __name__ == '__main__' :
     ll.remove_at(0)
     ll.print()
     ll.insert_at(0, '0')
-    ll.print()
-    ll.reverseList()
     ll.print()
     ll.pop_back()
     ll.print()
