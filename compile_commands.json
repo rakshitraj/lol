@@ -1,0 +1,7 @@
+[
+    {
+        "directory": ".",
+        "command": "/usr/bin/clang -g++ count_inversions.cpp -o count_inversions.exe",
+        "file": "count_inversions.cpp"
+    }
+]
