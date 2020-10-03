@@ -166,7 +166,7 @@ void show(const std::vector<int> &arr)
 
 /**
  * @breif Main Function
- * @retirns 0 on exit
+ * @returns 0 on exit
  */
 int main()
 {
