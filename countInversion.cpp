@@ -54,61 +54,11 @@ namespace sorting {
  */
 namespace inversion {
 
-int mergeSort(int* arr, int* temp, int left, int right);
-int merge(int* arr, int* temp, int left, int mid, int right);
-int countInversion(int* arr, const int size);
-void show(int* arr, const int size);
-
-/**
- * Funtion countInversion() returns the number of inversion
- * present in the input array. Inversions are an estimate of
- * how close or far off the array is to being sorted.
- *
- * Number of inversions in a sorted array is 0.
- * Number of inversion in an array[1...n] sorted in
- * non-ascending order is n(n-1)/2, since each pair of elements
- * contitute an inversion.
- *
- * @param arr   - array, data member of std::vector<int>, input for counting
- * inversions
- * @param array_size    - number of elementa in the array
- * @returns number of inversions in input array, sorts the array
- */
-int countInversion(int* arr, const int size) {
-    std::vector<int> temp;
-    temp.reserve(size);
-    temp.assign(size, 0);
-    return mergeSort(arr, temp.data(), 0, size - 1);
-}
-
-/**
- *
- * The mergeSort() function implements Merge Sort, a
- * Divide and conquer algorithm, it divides the input
- * array into two halves and calls itself for each
- * sub-array and then calls the merge() function to
- * merge the two halves.
- *
- * @param arr   - array to be sorted
- * @param temp  - merged resultant array
- * @param left  - lower bound of array
- * @param right - upper bound of array
- * @returns number of inversions in array
- */
-int mergeSort(int* arr, int* temp, int left, int right) {
-    int mid = 0, inv_count = 0;
-    if (right > left) {
-        // midpoint to split the array
-        mid = (right + left) / 2;
-        // Add inversions in left and right sub-arrays
-        inv_count += mergeSort(arr, temp, left, mid);  // left sub-array
-        inv_count += mergeSort(arr, temp, mid + 1, right);
-
-        // inversions in the merge step
-        inv_count += merge(arr, temp, left, mid, right);
-    }
-    return inv_count;
-}
+// Functions used --->
+// int mergeSort(int* arr, int* temp, int left, int right);
+// int merge(int* arr, int* temp, int left, int mid, int right);
+// int countInversion(int* arr, const int size);
+// void show(int* arr, const int size);
 
 /**
  * Function to merge two sub-arrays. merge() function is called
@@ -126,7 +76,8 @@ int mergeSort(int* arr, int* temp, int left, int right) {
  * @param right  upper bound of arr[] and right-sub-array
  * @returns number of inversions found in merge step
  */
-int merge(int* arr, int* temp, int left, int mid, int right) {
+template<typename T>
+int merge(T* arr, T* temp, int left, int mid, int right) {
     int i = left;       /* i --> index of left sub-array */
     int j = mid + 1;    /* j --> index for right sub-array */
     int k = left;       /* k --> index for resultant array temp */
@@ -157,13 +108,67 @@ int merge(int* arr, int* temp, int left, int mid, int right) {
 }
 
 /**
+ *
+ * The mergeSort() function implements Merge Sort, a
+ * Divide and conquer algorithm, it divides the input
+ * array into two halves and calls itself for each
+ * sub-array and then calls the merge() function to
+ * merge the two halves.
+ *
+ * @param arr   - array to be sorted
+ * @param temp  - merged resultant array
+ * @param left  - lower bound of array
+ * @param right - upper bound of array
+ * @returns number of inversions in array
+ */
+template<typename T>
+int mergeSort(T* arr, T* temp, int left, int right) {
+    int mid = 0, inv_count = 0;
+    if (right > left) {
+        // midpoint to split the array
+        mid = (right + left) / 2;
+        // Add inversions in left and right sub-arrays
+        inv_count += mergeSort(arr, temp, left, mid);  // left sub-array
+        inv_count += mergeSort(arr, temp, mid + 1, right);
+
+        // inversions in the merge step
+        inv_count += merge(arr, temp, left, mid, right);
+    }
+    return inv_count;
+}
+
+/**
+ * Funtion countInversion() returns the number of inversion
+ * present in the input array. Inversions are an estimate of
+ * how close or far off the array is to being sorted.
+ *
+ * Number of inversions in a sorted array is 0.
+ * Number of inversion in an array[1...n] sorted in
+ * non-ascending order is n(n-1)/2, since each pair of elements
+ * contitute an inversion.
+ *
+ * @param arr   - array, data member of std::vector<int>, input for counting
+ * inversions
+ * @param array_size    - number of elementa in the array
+ * @returns number of inversions in input array, sorts the array
+ */
+template<class T>
+int countInversion(T* arr, const T size) {
+    std::vector<T> temp;
+    temp.reserve(size);
+    temp.assign(size, 0);
+    return mergeSort(arr, temp.data(), 0, size - 1);
+}
+
+/**
  * UTILITY function to print array.
  * @param arr[]   array to print
  * @param array_size    size of input array arr[]
  * @returns void
  *
  */
-void show(int* arr, const int array_size) {
+template <typename T>
+void show(T* arr, const int array_size) {
     std::cout << "Printing array: \n";
     for (int i = 0; i < array_size; i++) {
         std::cout << " " << arr[i];
