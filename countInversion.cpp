@@ -232,33 +232,33 @@ static void test() {
 // template <typename T>
 // static void body() {
 //     // Input your own sequence
-//     uint32_t size;
+//     uint_t size;
 //     T input;
 //     std::cout << "Enter number of elements:";
 //     std::cin >> size;
-
+//
 //     std::vector<T> arr;
 //     arr.reserve(size);
-
+//
 //     std::cout << "Enter elements -->\n";
 //     for (uint64_t i=1; i<=size; i++) {
 //         std::cout << "Element "<< i <<" :";
 //         std::cin >> input;
 //         arr.push_back(input);
 //     }
-
+//
 //     if (size != arr.size()) {
 //         size = arr.size();
 //     }
-
+//
 //     std::cout << "\n";
 //     sorting::inversion::show(arr.data(), size);
 //     std::cout << "\n";
-
+//
 //     // Counting inversions
 //     std::cout << "\nThe number of inversions: "<<
 //     sorting::inversion::countInversion(arr.data(), size) << "\n";
-
+//
 //     // Output sorted array
 //     std::cout << "\nSorted array -->  \n";
 //     sorting::inversion::show(arr.data(), size);
